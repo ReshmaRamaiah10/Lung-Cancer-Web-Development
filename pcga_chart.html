@@ -1,0 +1,199 @@
+<html>
+    <head>
+        <script type="text/javascript"></script>
+        <meta charset="utf-8" /></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <h1>Association of Lung Cancer Imaging With Genomic and Clinical Data</h1>
+        <script type="text/javascript"></script>
+        <style>
+            h1 {
+                padding: 60px;
+                text-align: center;
+                background: #1ABC9C;
+                color: white;
+                font-size: 30px;
+                }
+            .navbar {
+                overflow: hidden;
+                background-color: #008080;
+                font-family: Arial, Helvetica, sans-serif;
+                }
+            .navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                }
+            .dropdown {
+                float: left;
+                overflow: hidden;
+                }
+                .dropdown .dropbtn {
+                cursor: pointer;
+                font-size: 16px;  
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+                }
+                .navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+                background-color: #008B8B;
+                }
+                .show {
+                display: block;
+                }
+            * {box-sizing: border-box;}
+            .row {
+                margin-left:-5px;
+                margin-right:-5px;
+                }
+            .column {
+                float: left;
+                width: 33%;
+                padding: 15px;
+                }
+            /* Clearfix (clear floats) */
+                .row::after {
+                content: "";
+                clear: both;
+                display: table;
+                }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #ddd;
+                }
+              th, td {
+                text-align: left;
+                padding: 16px;
+                }
+            tr:nth-child(even) {
+                background-color: #F2F2F2;
+                }
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                }
+        </style>
+    </head>
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="#home">Home</a>
+            <a href="#help">Help</a>
+            <a href="#PCGA">PCGA</a>
+            <a href="#TCGA">TCGA</a>
+        </div>
+        <p>A database that connects these feature vectors to various forms of genomic and clinical data and visualize those associations in premalignant/malignant lesions.</p>
+        <p> DESCRIPTION TO BE ADDED </p>
+        <br><br>
+        <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Molecular Subtype</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Dysplasia Grade</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">TCGA Subtype</h3></div>
+        </div>
+        <div class="row">
+            <div class="column" id = "Molecular_Subtype_Chart" style="height:200px;"></div>
+            <div class="column" id = "Dysplasia_Grade_Chart" style="height:200px;"></div>
+            <div class="column" id = "TCGA_Subtype_Chart" style="height:200px;"></div>
+        </div>
+        <div class="row">
+        <div class="column" style="text-align:center; width: 100%;">
+            <h3 style="text-align:center; background-color: powderblue;">Tumor Location</h3></div>
+        </div>
+        <div class="row">
+            <div class="column" id = "Location_Desc_Chart" style="height:400px; width: 100%;overflow-y: scroll;"></div>
+        </div>
+        <div class="row">
+        <div class="column" style="text-align:center; width: 100%;">
+            <h3 style="text-align:center; background-color: powderblue;">Age at Baseline</h3></div>
+        </div>
+        <div class="row">
+            <div class="column" id = "Age_at_Baseline_Chart" style="height:350px; width: 100%;"></div>
+        </div>
+        <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Sample Type</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Cohort</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Gender</h3></div>
+        </div>
+        <div class="row">
+            <div class="column" id = "SampleType_Chart" style="height:200px;"></div>
+            <div class="column" id = "Cohort_Chart" style="height:200px;"></div>
+            <div class="column" id = "Sex_Chart" style="height:200px;"></div>
+        </div>
+        <div class="row">
+        <div class="column" style="text-align:center; width: 25%;">
+            <h3 style="text-align:center; background-color: powderblue;">Genomic Smoking Status</h3></div>
+        <div class="column" style="text-align:center; width: 25%;">
+            <h3 style="text-align:center; background-color: powderblue;">Previous Lung Cancer History</h3></div>
+        <div class="column" style="text-align:center; width: 25%;">
+            <h3 style="text-align:center; background-color: powderblue;">High Risk Lung Cancer Job</h3></div>
+        <div class="column" style="text-align:center; width: 25%;">
+            <h3 style="text-align:center; background-color: powderblue;">Asbestos Exposure</h3></div>
+        </div>
+        <div class="row">
+            <div class="column" id = "Genomic_Smoking_Status_Chart" style="height:200px; width: 25%;"></div>
+            <div class="column" id = "Previous_LC_History_Chart" style="height:200px; width: 25%;"></div>
+            <div class="column" id = "HighRisk_LC_Job_Chart" style="height:200px; width: 25%;"></div>
+            <div class="column" id = "Asbestos_Exp_Chart" style="height:200px; width: 25%;"></div>
+        </div>
+
+    <script>
+        $(document).ready(function() {
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"SampleType_Chart"},function(data){draw_pie(data,"SampleType_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Cohort_Chart"},function(data){draw_pie(data,"Cohort_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Sex_Chart"},function(data){draw_pie(data,"Sex_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Genomic_Smoking_Status_Chart"},function(data){draw_pie(data,"Genomic_Smoking_Status_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Previous_LC_History_Chart"},function(data){draw_pie(data,"Previous_LC_History_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"HighRisk_LC_Job_Chart"},function(data){draw_pie(data,"HighRisk_LC_Job_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Asbestos_Exp_Chart"},function(data){draw_pie(data,"Asbestos_Exp_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Location_Desc_Chart"},function(data){draw_pie(data,"Location_Desc_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Age_at_Baseline_Chart"},function(data){draw_pie(data,"Age_at_Baseline_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Molecular_Subtype_Chart"},function(data){draw_pie(data,"Molecular_Subtype_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"Dysplasia_Grade_Chart"},function(data){draw_pie(data,"Dysplasia_Grade_Chart");},"json");
+            $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/basic_charts.py",{selector:"TCGA_Subtype_Chart"},function(data){draw_pie(data,"TCGA_Subtype_Chart");},"json");
+            function draw_pie(chart_data,div_id){
+                google.charts.load('current', {'packages':['corechart']});
+                google.charts.setOnLoadCallback(function(){
+                    drawChart(chart_data,div_id);
+               });}
+            function drawChart(chart_data,div_id) {
+                var data = new google.visualization.DataTable();
+                if (div_id=="Age_at_Baseline_Chart"){data.addColumn('number', 'age');}
+                else{data.addColumn('string', 'variable');
+                    data.addColumn('number', 'Number of patients');}
+                const data_rows=[];
+                for (let row=0; row<chart_data.length; row++){
+                    data_rows.push(chart_data[row]);}
+                data.addRows(data_rows);
+                if ((div_id=="Molecular_Subtype_Chart" || div_id=="Dysplasia_Grade_Chart" || div_id=="TCGA_Subtype_Chart")){
+                    var chart = new google.visualization.PieChart(document.getElementById(div_id));
+                     var options = {'width':400,'height':200,is3D: true,chartArea:{height: '80%',width: '80%'}};}
+                else if (div_id=="Location_Desc_Chart"){
+                    var chart = new google.visualization.BarChart(document.getElementById(div_id));
+                    var options = {};}
+                else if (div_id=="Age_at_Baseline_Chart"){
+                    var chart = new google.visualization.Histogram(document.getElementById(div_id));
+                    var options = {hAxis:{title: 'Age'},vAxis:{title: 'Number of Patients'}};}
+                else {var chart = new google.visualization.PieChart(document.getElementById(div_id));
+                     var options = {'width':400,'height':200,colors: ['#3cb371', '#ffe4b5'],chartArea:{height: '80%',width: '80%'}};}
+                chart.draw(data,options);
+            }
+            });
+        </script>
+    </body>
+</html>

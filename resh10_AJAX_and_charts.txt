@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            body {
+              font: 15px Times New Roman;
+            }
+            input {
+              border: 1px solid transparent;
+              background-color: #F1F1F1;
+              padding: 10px;
+              font-size: 20px;
+            }
+            table, th, td {
+                border: 1.5px solid black;
+                border-collapse: collapse;
+                padding: 15px;
+            }
+            table {
+                width: 450px;
+            }
+            th {
+                text-align: center;
+            }
+            td {
+                text-align: left;
+            }
+            tr:nth-child(even) {
+                background-color: #F2F2F2;
+            }
+            button {
+              background-color: DodgerBlue;
+              color: #fff; /* white; */
+            }
+            select {
+              font-size: 16px;
+              width: 200px;
+            }
+            h1 {
+                background-color: DodgerBlue;
+                text-align: center;
+            }
+        </style>
+        <h1>miRNA Database Query Portal</h1>
+    </head>
+    <body>
+        <p> The following portal queries the miRNA database and produces a table output and a histogram of miRNA results</p>
+        <h3>Target Scores Query:</h3>
+        <p>We use google chart, histogram to visualize the target scores of genes targeted by that miRNA.</p>
+        Enter a miRNA name: <input type="text" id="miRNA_name">
+        <p><i>Sample miRNA name: hsa-miR-30a, hsa-miR-580, hsa-miR-874</i></p>
+        <button id="miRNA_button">Target scores histogram</button><br><br>
+        <div id="miRNA_histogram"></div>
+        <h3>miRNA Sequence Query:</h3>
+        <p>Here is a table of the names and sequences of miRNAs that have sequences containing the search sequence</p>
+        Enter RNA search sequence: <input type="text" id="seq_name">
+        <p><i>Allowed alphabet characters: 'A', 'U', 'G' and 'C'</i></p>
+        <button id="seq_button">find miRNAs</button><br><br>
+        <div id="miRNA_table"></div>
+        <script>
+            $(document).ready(function(){
+                $("#miRNA_button").click(function(){
+                    let miRNA_name = $("#miRNA_name").val();
+                    if (miRNA_name == "") {
+                        alert("You did not enter the name!");
+                        return false;}
+                    $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/resh10_AJAX.py",{selector:"miRNA_histogram",miRNA_name:miRNA_name},function(data){draw_histogram(data);},"json");
+                });
+                $("#seq_button").click(function(){
+                    let miRNA_seq = $("#seq_name").val();
+                    if (miRNA_seq == "") {
+                        alert("You did not enter the sequence!");
+                        return false;}
+                    if (miRNA_seq.length < 3){
+                        alert("Please enter 3 or more characters!");
+                        return false;}
+                    if (miRNA_seq.length > 8){
+                        alert("Please enter 8 or lesser characters!");
+                        return false;}
+                    if (miRNA_seq.match(/[bd-fh-tv-z]+/ig)){
+                        alert("Sequence should only consist of 'A','U','G','C'!");
+                        return false;}
+                    $.get("https://bioed.bu.edu/cgi-bin/students_22/resh10/resh10_AJAX.py",{selector:"miRNA_table",miRNA_seq:miRNA_seq},function(data){create_table(data);},"json");
+                });});
+             function draw_histogram(chart_data){
+                $("#miRNA_histogram").empty()
+                if (chart_data ==""){
+                    $("#miRNA_histogram").append(`<p style="color:red">miRNA you have entered is not in the database</p>`)
+                    return false;}
+                else{
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(function(){
+                    drawChart(chart_data);
+               });}}
+            function drawChart(chart_data) {
+                let miRNA_name = $("#miRNA_name").val();
+                $("#miRNA_histogram").empty()
+                var data = new google.visualization.DataTable();
+                data.addColumn('number', 'target score');
+                const data_rows=[];
+                for (let row=0; row<chart_data.length; row++){
+                    data_rows.push(chart_data[row]);}
+                data.addRows(data_rows);
+                var options = {'title':'Histogram of gene targeting scores for ' + miRNA_name,
+                               'width':900,
+                               'height':500};
+                var chart = new google.visualization.Histogram(document.getElementById('miRNA_histogram'));
+                chart.draw(data,options);
+            }
+            function create_table(data){
+                let miRNA_seq = $("#seq_name").val();
+                $("#miRNA_table").empty();
+                let table_body_contents = "";
+                if (data ==""){
+                    $("#miRNA_table").append(`<p style="color:red">Sequence you have entered is not in the database</p>`)
+                    return false;}
+                if (data!=""){
+                    $("#miRNA_table").append(`<h3>Table with all matching miRNA for the sequence: ${miRNA_seq}</h3>`)
+                    for (let row = 0; row<data.length; row++) {
+                        let miRNA = data[row][0];
+                        let seq = data[row][1];
+                        table_body_contents += `<tr><td> ${miRNA}</td><td> ${seq}</td></tr>`;
+                    }
+                let table_template = `<table><thead><tr><th>miRNA</th><th>Sequence</th></tr></thead><tbody>${table_body_contents}</tbody></table>`;
+                $("#miRNA_table").append(table_template)
+                }
+            }
+        </script>
+    </body>
+</html>

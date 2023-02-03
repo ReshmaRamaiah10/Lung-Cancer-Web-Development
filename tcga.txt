@@ -1,0 +1,520 @@
+<html>
+    <head>
+        <script type="text/javascript"></script>
+        <meta charset="utf-8" /></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <h1>Association of Lung Cancer Imaging With Genomic and Clinical Data</h1>
+        <script src="Scripts/ScrollableTablePlugin_1.0_min.js" type="text/javascript"></script>
+        <script type="text/javascript"></script>
+        <style>
+            h1 {
+                padding: 60px;
+                text-align: center;
+                background: #1ABC9C;
+                color: white;
+                font-size: 30px;
+                }
+            .navbar {
+                overflow: hidden;
+                background-color: #008080;
+                font-family: Arial, Helvetica, sans-serif;
+                }
+            .navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                }
+            .dropdown {
+                float: left;
+                overflow: hidden;
+                }
+                .dropdown .dropbtn {
+                cursor: pointer;
+                font-size: 16px;  
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+                }
+                .navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+                background-color: #008B8B;
+                }
+                .show {
+                display: block;
+                }
+            * {box-sizing: border-box;}
+            .row {
+                margin-left:-5px;
+                margin-right:-5px;
+                }
+            .column {
+                float: left;
+                width: 40%;
+                padding: 15px;
+                }
+            /* Clearfix (clear floats) */
+                .row::after {
+                content: "";
+                clear: both;
+                display: table;
+                }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #ddd;
+                }
+              th, td {
+                text-align: left;
+                padding: 16px;
+                }
+            tr:nth-child(even) {
+                background-color: #F2F2F2;
+                }
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                }
+        </style>
+    </head>
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="#home">Home</a>
+            <a href="#help">Help</a>
+            <a href="#PCGA">PCGA</a>
+            <a href="#TCGA">TCGA</a>
+        </div>
+        <p>DESCRIPTION TO BE ADDED</p>
+        <br><br>
+        <b>Sample Type:</b>
+        <select name="sample_type" id="sample_type">
+        <option value="" selected="selected">Choose the Sample type </option>
+        <option value="Primary Tumor">Biopsy</option>
+        <option value="Solid Tissue Normal">Brush</option>
+        <option value="Recuurent Tumor">Primary Tumor</option>
+        </select>
+        <br><br>
+        <b>Year of Diagnosis:</b>
+        <select name="year_of_diagnosis" id="year_of_diagnosis">
+        <option value="" selected="selected">Choose the year </option>
+        <option value="1991">1991</option>
+        <option value="1992">1992</option>
+        <option value="1993">1993</option>
+        <option value="1994">1994</option>
+        <option value="1995">1995</option>
+        <option value="1996">1996</option>
+        <option value="1997">1997</option>
+        <option value="1998">1998</option>
+        <option value="1999">1999</option>
+        <option value="2000">2000</option>
+        <option value="2001">2001</option>
+        <option value="2002">2002</option>
+        <option value="2003">2003</option>
+        <option value="2004">2004</option>
+        <option value="2005">2005</option>
+        <option value="2006">2006</option>
+        <option value="2007">2007</option>
+        <option value="2008">2008</option>
+        <option value="2009">2009</option>
+        <option value="2010">2010</option>
+        <option value="2011">2011</option>
+        <option value="2012">2012</option>
+        <option value="2013">2013</option>
+        </select>
+        <br><br>
+        <b>Gender:</b> 
+        <select name="gender" id="gender">
+        <option value="" selected="selected">Choose a gender type </option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="">- All -</option>
+        </select>
+        <br><br>
+        <b>Prior Malignancy:</b>
+        <select name="prior_malignancy" id="prior_malignancy">
+        <option value="" selected="selected">Choose the Prior Malignancy Status: </option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <input type="button" id="save_value" name="save_value" value="Save" />
+        <div id ="write1"></div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">AJCC Pathologic Stage</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">AJCC Staging System Edition</h3></div>
+    </div>
+    <div class="row">
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="ajcc_pathologic_stage">
+                <tbody>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage I" class="ajcc_pathologic_stage" type="checkbox" value="Stage I"/></td>
+                        <td>Stage I</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IA" class="ajcc_pathologic_stage" type="checkbox" value="Stage IA"/></td>
+                        <td>Stage IA</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IB" class="ajcc_pathologic_stage" type="checkbox" value="Stage IB"/></td>
+                        <td>Stage IB</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage II" class="ajcc_pathologic_stage" type="checkbox" value="Stage II"/></td>
+                        <td>Stage II</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage II" class="ajcc_pathologic_stage" type="checkbox" value="Stage II"/></td>
+                        <td>Stage II</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage II" class="ajcc_pathologic_stage" type="checkbox" value="Stage II"/></td>
+                        <td>Stage II</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage II" class="ajcc_pathologic_stage" type="checkbox" value="Stage II"/></td>
+                        <td>Stage II</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage II" class="ajcc_pathologic_stage" type="checkbox" value="Stage II"/></td>
+                        <td>Stage II</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IIA" class="ajcc_pathologic_stage" type="checkbox" value="Stage IIA"/></td>
+                        <td>Stage IIA</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IIB" class="ajcc_pathologic_stage" type="checkbox" value="Stage IIB"/></td>
+                        <td>Stage IIB</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage III" class="ajcc_pathologic_stage" type="checkbox" value="Stage III"/></td>
+                        <td>Stage III</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IIIA" class="ajcc_pathologic_stage" type="checkbox" value="Stage IIIA"/></td>
+                        <td>Stage IIIA</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IIIB" class="ajcc_pathologic_stage" type="checkbox" value="Stage IIIB"/></td>
+                        <td>Stage IIIB</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_stage[]" id="Stage IV" class="ajcc_pathologic_stage" type="checkbox" value="Stage IV"/></td>
+                        <td>Stage IV</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="column" style="height:200px; overflow-y: scroll;">
+        <table id="ajcc_staging_system_edition">
+                <tbody>
+                    <tr>
+                        <td><input name="ajcc_staging_system_edition[]" id="3rd" class="ajcc_staging_system_edition" type="checkbox" value="3rd"/></td>
+                        <td>3rd</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_staging_system_edition[]" id="4th" class="ajcc_staging_system_edition" type="checkbox" value="4th"/></td>
+                        <td>4th</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_staging_system_edition[]" id="5th" class="ajcc_staging_system_edition" type="checkbox" value="5th"/></td>
+                        <td>5th</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_staging_system_edition[]" id="6th" class="ajcc_staging_system_edition" type="checkbox" value="6th"/></td>
+                        <td>6th</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_staging_system_edition[]" id="7th" class="ajcc_staging_system_edition" type="checkbox" value="7th"/></td>
+                        <td>7th</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_staging_system_edition[]" id="NA" class="ajcc_staging_system_edition" type="checkbox" value="NA"/></td>
+                        <td>None</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Tissue or Organ of Origin</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">AJCC Pathologic T</h3></div>
+    </div>
+    <div class="row">
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="tissue_or_organ_of_origin">
+                <tbody>
+                    <tr>
+                        <td><input name="tissue_or_organ_of_origin[]" id="Lower lobe, lung, lung" class="tissue_or_organ_of_origin" type="checkbox" value="Lower lobe, lung"/></td>
+                        <td>Lower lobe, lung</td>
+                    </tr>
+                    <tr>
+                        <td><input name="tissue_or_organ_of_origin[]" id="Middle lobe, lung" class="tissue_or_organ_of_origin" type="checkbox" value="Middle lobe, lung"/></td>
+                        <td>Middle lobe, lung</td>
+                    </tr>
+                    <tr>
+                        <td><input name="tissue_or_organ_of_origin[]" id="Upper lobe, lung" class="tissue_or_organ_of_origin" type="checkbox" value="Upper lobe, lung"/></td>
+                        <td>Upper lobe, lung</td>
+                    </tr>
+                    <tr>
+                        <td><input name="tissue_or_organ_of_origin[]" id="Lung, NOS" class="tissue_or_organ_of_origin" type="checkbox" value="Lung, NOS"/></td>
+                        <td>Lung, NOS</td>
+                    </tr>
+                    <tr>
+                        <td><input name="tissue_or_organ_of_origin[]" id="Main bronchus" class="tissue_or_organ_of_origin" type="checkbox" value="Main bronchus"/></td>
+                        <td>Main bronchus</td>
+                    </tr>
+                    <tr>
+                        <td><input name="tissue_or_organ_of_origin[]" id="Overlapping lesion of lung" class="tissue_or_organ_of_origin" type="checkbox" value="Overlapping lesion of lung"/></td>
+                        <td>Overlapping lesion of lung</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="ajcc_pathologic_t">
+                <tbody>
+                    <tr>
+                        <td><input name="ajcc_pathologic_t[]" id="T1" class="ajcc_pathologic_t" type="checkbox" value="T1"/></td>
+                        <td>T1</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_t[]" id="T1a" class="ajcc_pathologic_t" type="checkbox" value="T1a"/></td>
+                        <td>T1a</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_t[]" id="T1b" class="ajcc_pathologic_t" type="checkbox" value="T1b"/></td>
+                        <td>T1b</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_t[]" id="T2" class="ajcc_pathologic_t" type="checkbox" value="T2"/></td>
+                        <td>T2</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_t[]" id="T2a" class="ajcc_pathologic_t" type="checkbox" value="T2a"/></td>
+                        <td>T2a</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_t[]" id="T2b" class="ajcc_pathologic_t" type="checkbox" value="T2b"/></td>
+                        <td>T2b</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">AJCC Pathologic M</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">AJCC Pathologic N</h3></div>
+    </div>
+    <div class="row">
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="ajcc_pathologic_m">
+                <tbody>
+                    <tr>
+                        <td><input name="ajcc_pathologic_m[]" id="M0" class="ajcc_pathologic_m" type="checkbox" value="M0"/></td>
+                        <td>M0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_m[]" id="M1" class="ajcc_pathologic_m" type="checkbox" value="M1"/></td>
+                        <td>M1</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_m[]" id="M1a" class="ajcc_pathologic_m" type="checkbox" value="M1a"/></td>
+                        <td>M1a</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_m[]" id="M1b" class="ajcc_pathologic_m" type="checkbox" value="M1b"/></td>
+                        <td>M1b</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_m[]" id="MX" class="ajcc_pathologic_m" type="checkbox" value="MX"/></td>
+                        <td>MX</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="ajcc_pathologic_n">
+                <tbody>
+                    <tr>
+                        <td><input name="ajcc_pathologic_n[]" id="N0" class="ajcc_pathologic_n" type="checkbox" value="N0"/></td>
+                        <td>N0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_n[]" id="N1" class="ajcc_pathologic_n" type="checkbox" value="N1"/></td>
+                        <td>N1</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_n[]" id="N2" class="ajcc_pathologic_n" type="checkbox" value="N2"/></td>
+                        <td>N2</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_n[]" id="N3" class="ajcc_pathologic_n" type="checkbox" value="N3"/></td>
+                        <td>N3</td>
+                    </tr>
+                    <tr>
+                        <td><input name="ajcc_pathologic_n[]" id="NX" class="ajcc_pathologic_n" type="checkbox" value="NX"/></td>
+                        <td>NX</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Age at Index</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Years Smoked</h3></div>
+    </div>
+    <div class="row">
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="age_at_index">
+                <tbody>
+                    <tr>
+                        <td><input name="age_at_index[]" id="30.0-40.0" class="age_at_index" type="checkbox" value="30"/></td>
+                        <td>30.0 - 40.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="age_at_index[]" id="40.0-50.0" class="age_at_index" type="checkbox" value="40"/></td>
+                        <td>40.0 - 50.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="age_at_index[]" id="50.0-60.0" class="age_at_index" type="checkbox" value="50"/></td>
+                        <td>50.0 - 60.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="age_at_index[]" id="60.0-70.0" class="age_at_index" type="checkbox" value="60"/></td>
+                        <td>60.0 - 70.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="age_at_index[]" id="70.0-80.0" class="age_at_index" type="checkbox" value="70"/></td>
+                        <td>70.0 - 80.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="age_at_index[]" id="80.0-90.0" class="age_at_index" type="checkbox" value="80"/></td>
+                        <td>80.0 - 90.0</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="years_smoked">
+                <tbody>
+                    <tr>
+                        <td><input name="years_smoked[]" id="0-10.0" class="years_smoked" type="checkbox" value="0"/></td>
+                        <td> 0.0 - 10.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="years_smoked[]" id="10.0-20.0" class="years_smoked" type="checkbox" value="10"/></td>
+                        <td>10.0 - 20.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="years_smoked[]" id="20.0-30.0" class="years_smoked" type="checkbox" value="20"/></td>
+                        <td>20.0 - 30.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="years_smoked[]" id="30.0-40.0" class="years_smoked" type="checkbox" value="30"/></td>
+                        <td>30.0 - 40.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="years_smoked[]" id="40.0-50.0" class="years_smoked" type="checkbox" value="40"/></td>
+                        <td>40.0 - 50.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="years_smoked[]" id="50.0-60.0" class="years_smoked" type="checkbox" value="50"/></td>
+                        <td>50.0 - 60.0</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Primary Diagnosis</h3></div>
+    </div>
+    <div class="row">
+    <div class="column" style="height:200px; overflow-y: scroll;">
+         <table id="primary_diagnosis">
+                <tbody>
+                    <tr>
+                        <td><input name="primary_diagnosis[]" id="Basal" class="primary_diagnosis" type="checkbox" value="Basal"/></td>
+                        <td>Basal</td>
+                        <!-- to be added based on ajax once we get the python script -->
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div><input type="button" id="submit" name="submit" value="Submit" /></div>
+    <div id = "write2"></div>
+    <script>
+        $(document).ready(function() {
+            $('#save_value').click(function() {
+                    $("#write1").empty();
+                    var sample_type = $("#sample_type").val();
+                    let year_of_diagnosis = $("#year_of_diagnosis").val();
+                    let gender = $("#gender").val();
+                    let prior_malignancy = $("#prior_malignancy").val();
+                    $("#write1").append(`<h3>Sample Type: ${sample_type}</h3>`);
+                    $("#write1").append(`<h3>Year of Diagnosis: ${year_of_diagnosis}</h3>`);
+                    $("#write1").append(`<h3>Gender: ${gender}</h3>`);
+                    $("#write1").append(`<h3>Prior Malignancy: ${prior_malignancy}</h3>`);
+            });
+            $('#submit').click(function() {
+                $("#write2").empty();
+                var ajcc_pathologic_stage = []
+                var ajcc_staging_system_edition = []
+                var tissue_or_organ_of_origin = []
+                var ajcc_pathologic_t = []
+                var ajcc_pathologic_m = []
+                var ajcc_pathologic_n = []
+                var age_at_index = []
+                var years_smoked = []
+                var primary_diagnosis = []
+                var i = 0
+                $('.ajcc_pathologic_stage:checked').each(function(i) {
+                    ajcc_pathologic_stage[i++] = $(this).val();});
+                $('.ajcc_staging_system_edition:checked').each(function(i) {
+                    ajcc_staging_system_edition[i++] = $(this).val();});
+                $('.tissue_or_organ_of_origin:checked').each(function(i) {
+                    tissue_or_organ_of_origin[i++] = $(this).val();});
+                $('.ajcc_pathologic_t:checked').each(function(i) {
+                    ajcc_pathologic_t[i++] = $(this).val();});
+                $('.ajcc_pathologic_m:checked').each(function(i) {
+                    ajcc_pathologic_m[i++] = $(this).val();});
+                $('.ajcc_pathologic_n:checked').each(function(i) {
+                    ajcc_pathologic_n[i++] = $(this).val();});
+                $('.age_at_index:checked').each(function(i) {
+                    age_at_index[i++] = $(this).val();});
+                $('.years_smoked:checked').each(function(i) {
+                    years_smoked[i++] = $(this).val();});
+                $('.primary_diagnosis:checked').each(function(i) {
+                    primary_diagnosis[i++] = $(this).val();});
+                $("#write2").append(`<h3>AJCC Pathologic Stage: ${ajcc_pathologic_stage}</h3>`);
+                $("#write2").append(`<h3>AJCC Staging System Edition: ${ajcc_staging_system_edition}</h3>`);
+                $("#write2").append(`<h3>Tissue or Organ of Origin: ${tissue_or_organ_of_origin}</h3>`);
+                $("#write2").append(`<h3>AJCC Pathologic T: ${ajcc_pathologic_t}</h3>`);
+                $("#write2").append(`<h3>AJCC Pathologic M: ${ajcc_pathologic_m}</h3>`);
+                $("#write2").append(`<h3>AJCC Pathologic N: ${ajcc_pathologic_n}</h3>`);
+                $("#write2").append(`<h3>Age at Index: ${age_at_index}</h3>`);
+                $("#write2").append(`<h3>Years Smoked: ${years_smoked}</h3>`);
+                $("#write2").append(`<h3>Primary Diagnosis: ${primary_diagnosis}</h3>`);
+            });});
+        </script>
+    </body>
+</html>

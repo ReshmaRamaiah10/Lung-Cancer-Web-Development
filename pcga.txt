@@ -1,0 +1,331 @@
+<html>
+    <head>
+        <script type="text/javascript"></script>
+        <meta charset="utf-8" /></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <h1>Association of Lung Cancer Imaging With Genomic and Clinical Data</h1>
+        <script src="Scripts/ScrollableTablePlugin_1.0_min.js" type="text/javascript"></script>
+        <script type="text/javascript"></script>
+        <style>
+            h1 {
+                padding: 60px;
+                text-align: center;
+                background: #1ABC9C;
+                color: white;
+                font-size: 30px;
+                }
+            .navbar {
+                overflow: hidden;
+                background-color: #008080;
+                font-family: Arial, Helvetica, sans-serif;
+                }
+            .navbar a {
+                float: left;
+                font-size: 16px;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                }
+            .dropdown {
+                float: left;
+                overflow: hidden;
+                }
+                .dropdown .dropbtn {
+                cursor: pointer;
+                font-size: 16px;  
+                border: none;
+                outline: none;
+                color: white;
+                padding: 14px 16px;
+                background-color: inherit;
+                font-family: inherit;
+                margin: 0;
+                }
+                .navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+                background-color: #008B8B;
+                }
+                .show {
+                display: block;
+                }
+            * {box-sizing: border-box;}
+            .row {
+                margin-left:-5px;
+                margin-right:-5px;
+                }
+            .column {
+                float: left;
+                width: 40%;
+                padding: 15px;
+                }
+            /* Clearfix (clear floats) */
+                .row::after {
+                content: "";
+                clear: both;
+                display: table;
+                }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #ddd;
+                }
+              th, td {
+                text-align: left;
+                padding: 16px;
+                }
+            tr:nth-child(even) {
+                background-color: #F2F2F2;
+                }
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                }
+        </style>
+    </head>
+    </head>
+    <body>
+        <div class="navbar">
+            <a href="#home">Home</a>
+            <a href="#help">Help</a>
+            <a href="#PCGA">PCGA</a>
+            <a href="#TCGA">TCGA</a>
+        </div>
+        <p>A database that connects these feature vectors to various forms of genomic and clinical data and visualize those associations in premalignant/malignant lesions.</p>
+        <p> DESCRIPTION TO BE ADDED </p>
+        <br><br>
+        <b>Sample Type: </b>
+        <select name="sampletype" id="sampletype">
+        <option value="" selected="selected">Choose the Sample type </option>
+        <option value="Biopsy">Biopsy</option>
+        <option value="Brush">Brush</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <b>Cohort: </b>
+        <select name="cohorttype" id="cohorttype">
+        <option value="" selected="selected">Choose the Cohort type </option>
+        <option value="Discovery">Discovery</option>
+        <option value="Validation">Validation</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <b>Gender: </b>
+        <select name="sex" id="sex">
+        <option value="" selected="selected">Choose the Gender type </option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <b>Genomic Smoking Status: </b>
+        <select name="status" id="status">
+        <option value="" selected="selected">Choose the Smoking Status type </option>
+        <option value="Current">Current</option>
+        <option value="Former">Former</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <b>Previous Lung Cancer History: </b>
+        <select name="LC_history" id="LC_history">
+        <option value="" selected="selected">Choose the Lung Cancer History type </option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <b>High Risk Lung Cancer Job: </b>
+        <select name="LC_job" id="LC_job">
+        <option value="" selected="selected">Choose Lung Cancer Job type </option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="">- Both -</option>
+        </select>
+        <br><br>
+        <b>Asbestos Exposure: </b>
+        <select name="AB_exp" id="AB_exp">
+        <option value="" selected="selected">Choose the Asebestos Exposure type </option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+        <option value="">- Both -</option>
+        </select><br></br>
+        <input type="button" id="save_value" name="save_value" value="Save"/>
+        <div id ="write1"></div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Molecular Subtype</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Dysplasia Grade</h3></div>
+    </div>
+    <div class="row">
+    <div class="column">
+         <table id="MolecularSubtype">
+                <tbody>
+                    <tr>
+                        <td><input name="MolecularSubtype[]" id="Normal" class="MolecularSubtype" type="checkbox" value="Normal"/></td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><input name="MolecularSubtype[]" id="Secretory" class="MolecularSubtype" type="checkbox" value="Secretory"/></td>
+                        <td>Secretory</td>
+                    </tr>
+                    <tr>
+                        <td><input name="MolecularSubtype[]" id="Proliferative" class="MolecularSubtype" type="checkbox" value="Proliferative"/></td>
+                        <td>Proliferative</td>
+                    </tr>
+                    <tr>
+                        <td><input name="MolecularSubtype[]" id="Inflammatory" class="MolecularSubtype" type="checkbox" value="Inflammatory"/></td>
+                        <td>Inflammatory</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="column" style="height:200px; overflow-y: scroll;">
+        <table id="DysplasiaGrade">
+                <tbody>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="Normal" class="DysplasiaGrade" type="checkbox" value="Normal"/></td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="MildD" class="DysplasiaGrade" type="checkbox" value="MildD"/></td>
+                        <td>MildD</td>
+                    </tr>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="ModD" class="DysplasiaGrade" type="checkbox" value="ModD"/></td>
+                        <td>ModD</td>
+                    </tr>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="SevD" class="DysplasiaGrade" type="checkbox" value="SevD"/></td>
+                        <td>SevD</td>
+                    </tr>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="Metaplasia" class="DysplasiaGrade" type="checkbox" value="Metaplasia"/></td>
+                        <td>Metaplasia</td>
+                    </tr>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="Hyperplasia" class="DysplasiaGrade" type="checkbox" value="Hyperplasia"/></td>
+                        <td>Hyperplasia</td>
+                    </tr>
+                    <tr>
+                        <td><input name="DysplasiaGrade[]" id="UNK" class="DysplasiaGrade" type="checkbox" value="UNK"/></td>
+                        <td>UNK</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">TCGA Subtype</h3></div>
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Age at Baseline</h3></div>
+    </div>
+    <div class="row">
+    <div class="column">
+         <table id="TCGASubtype">
+                <tbody>
+                    <tr>
+                        <td><input name="TCGASubtype[]" id="Basal" class="TCGASubtype" type="checkbox" value="Basal"/></td>
+                        <td>Basal</td>
+                    </tr>
+                    <tr>
+                        <td><input name="TCGASubtype[]" id="Classical" class="TCGASubtype" type="checkbox" value="Classical"/></td>
+                        <td>Classical</td>
+                    </tr>
+                    <tr>
+                        <td><input name="TCGASubtype[]" id="Primitive" class="TCGASubtype" type="checkbox" value="Primitive"/></td>
+                        <td>Primitive</td>
+                    </tr>
+                    <tr>
+                        <td><input name="TCGASubtype[]" id="Secretory" class="TCGASubtype" type="checkbox" value="Secretory"/></td>
+                        <td>Secretory</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    <div class="column">
+         <table id="AgeatBaseline">
+                <tbody>
+                    <tr>
+                        <td><input name="AgeatBaseline[]" id="50.0-60.0" class="AgeatBaseline" type="checkbox" value="50"/></td>
+                        <td>50.0-60.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="AgeatBaseline[]" id="60.0-70.0" class="AgeatBaseline" type="checkbox" value="60"/></td>
+                        <td>60.0-70.0</td>
+                    </tr>
+                    <tr>
+                        <td><input name="AgeatBaseline[]" id="70.0-80.0" class="AgeatBaseline" type="checkbox" value="70"/></td>
+                        <td>70.0-80.0</td>
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+        <div class="column" style="text-align:center;">
+            <h3 style="text-align:center; background-color: powderblue;">Location</h3></div>
+    </div>
+    <div class="row">
+    <div class="column">
+         <table id="Location">
+                <tbody>
+                    <tr>
+                        <td><input name="Location[]" id="Basal" class="Location" type="checkbox" value="Basal"/></td>
+                        <td>Basal</td>
+                        <!-- to be added based on ajax once we get the python script -->
+                    </tr>
+                </tbody>
+        </table>
+    </div>
+    </div>
+    <div><input type="button" id="submit" name="submit" value="Submit" /></div>
+    <div id = "write2"></div>
+    <script>
+        $(document).ready(function() {
+            $('#save_value').click(function() {
+                    $("#write1").empty();
+                    var sampletype = $("#sampletype").val();
+                    let cohorttype = $("#cohorttype").val();
+                    let sex = $("#sex").val();
+                    let status = $("#status").val();
+                    let LC_history = $("#LC_history").val();
+                    let LC_job = $("#LC_job").val();
+                    let AB_exp = $("#AB_exp").val();
+                    $("#write1").append(`<h3>sampletype: ${sampletype}</h3>`);
+                    $("#write1").append(`<h3>cohorttype: ${cohorttype}</h3>`);
+                    $("#write1").append(`<h3>sex: ${sex}</h3>`);
+                    $("#write1").append(`<h3>status: ${status}</h3>`);
+                    $("#write1").append(`<h3>LC_history: ${LC_history}</h3>`);
+                    $("#write1").append(`<h3>LC_job: ${LC_job}</h3>`);
+                    $("#write1").append(`<h3>AB_exp: ${AB_exp}</h3>`);
+            });
+            $('#submit').click(function() {
+                $("#write2").empty();
+                var MolecularSubtype = []
+                var DysplasiaGrade = []
+                var TCGASubtype = []
+                var AgeatBaseline = []
+                var Location = []
+                var i = 0
+                $('.MolecularSubtype:checked').each(function(i) {
+                    MolecularSubtype[i++] = $(this).val();});
+                $('.DysplasiaGrade:checked').each(function(i) {
+                    DysplasiaGrade[i++] = $(this).val();});
+                $('.TCGASubtype:checked').each(function(i) {
+                    TCGASubtype[i++] = $(this).val();});
+                $('.AgeatBaseline:checked').each(function(i) {
+                    AgeatBaseline[i++] = $(this).val();});
+                $('.Location:checked').each(function(i) {
+                    Location[i++] = $(this).val();});
+                $("#write2").append(`<h3>MolecularSubtype: ${MolecularSubtype}</h3>`);
+                $("#write2").append(`<h3>Dysplasia Grade: ${DysplasiaGrade}</h3>`);
+                $("#write2").append(`<h3>TCGA Subtype: ${TCGASubtype}</h3>`);
+                $("#write2").append(`<h3>Age at Baseline: ${AgeatBaseline}</h3>`);
+                $("#write2").append(`<h3>Location: ${Location}</h3>`);
+            });});
+        </script>
+    </body>
+</html>
